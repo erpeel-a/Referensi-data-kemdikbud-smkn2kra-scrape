@@ -7,20 +7,22 @@ axios(url)
   .then(response => {
     const html = response.data
     const $ = cheerio.load(html)
-    const tableContainer = $('#tableguru tr.small')
+    const tableContainer = $('#tableguru > tbody > tr.small')
     const TeacherItem = [];
     let i = 1; 
     tableContainer.each(function () {
       const id = i++
       const Nama = $(this).find('td.sorting_1').text()
+      // #tableguru > tbody > tr:nth-child(1) > td.sorting_1
       const JenisKelamin = $(this).find('td.text-center').text();
+      // #tableguru > tbody > tr:nth-child(2) > td.text-center
       TeacherItem.push({
         id,
         Nama,
         JenisKelamin
       })
     })
-    fs.writeFile('./data/guru-1.json', JSON.stringify(TeacherItem), err => {
+    fs.writeFile('./data/guru-2.json', JSON.stringify(TeacherItem), err => {
       if (err) {
         console.log(err)
       }
